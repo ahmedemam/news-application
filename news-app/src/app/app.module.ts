@@ -1,28 +1,39 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NgxUiLoaderModule } from 'ngx-ui-loader';
-import { LoaderConfiguration } from './src/app/core/config/loader-configuration';
-import { LoginComponent } from './src/app/components/login/login.component';
-import { RegisterComponent } from './src/app/components/register/register.component';
-import { ErrorComponent } from './src/app/components/error/error.component';
-import { NewsComponent } from './src/app/components/news/news.component';
+import { LoaderConfiguration } from './_core/_config/loader-configuration';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { ErrorComponent } from './components/error/error.component';
+import { NewsComponent } from './components/news/news.component';
+import { HeaderComponent } from './components/header/header.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { JwtHelperService, JWT_OPTIONS, JwtModule } from '@auth0/angular-jwt';
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
     ErrorComponent,
-    NewsComponent
+    NewsComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgxUiLoaderModule.forRoot(LoaderConfiguration.configuration)
+    NgxUiLoaderModule.forRoot(LoaderConfiguration.configuration),
+    ReactiveFormsModule,
+    HttpClientModule,
+    JwtModule
   ],
-  providers: [],
+  providers: [
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

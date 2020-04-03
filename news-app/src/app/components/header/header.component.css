@@ -1,0 +1,23 @@
+.app-header{
+  align-content: center;
+  padding: 15px 0 10px 5px;
+  width: auto;
+  height: auto;
+}
+
+.app-header img{
+  float: left;
+  overflow: hidden;
+  width: 50px;
+  height: 50px;
+}
+
+.app-header .slogan{
+  font-size: 24px;
+}
+
+.app-header .slogan-description{
+  font-size: 12px;
+  position: relative;
+  top: -5px;
+}

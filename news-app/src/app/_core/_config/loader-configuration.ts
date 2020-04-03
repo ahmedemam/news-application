@@ -16,7 +16,7 @@ export class LoaderConfiguration {
     gap: 16,
     logoPosition: 'center-center',
     logoSize: 120,
-    logoUrl: 'assets/angular.png',
+    logoUrl: '../../../../../assets/images/icons8-news-spotlight-90.png',
     masterLoaderId: 'master',
     overlayBorderRadius: '0',
     overlayColor: 'rgba(40, 40, 40, 0.8)',
