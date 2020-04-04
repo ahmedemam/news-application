@@ -5,6 +5,7 @@ import { Source } from 'src/app/_core/_models/source';
 import { CategoryEnum } from 'src/app/_core/_models/category-enum.enum';
 import { CountryEnum } from 'src/app/_core/_models/country-enum.enum';
 import { LanguageEnum } from 'src/app/_core/_models/language-enum.enum';
+import { Sources } from 'src/app/_core/_models/sources';
 
 @Component({
   selector: 'app-source',
@@ -12,7 +13,7 @@ import { LanguageEnum } from 'src/app/_core/_models/language-enum.enum';
   styleUrls: ['./source.component.css']
 })
 export class SourceComponent implements OnInit {
-  sources: Source[] = [];
+  resources: Source[] = [];
   public CategoryEnum = CategoryEnum;
   public CountryEnum = CountryEnum;
   public LanguageEnum = LanguageEnum;
@@ -20,6 +21,7 @@ export class SourceComponent implements OnInit {
   subscribedCountries = [];
   subscribedLanguages = [];
   subscribedCategories = [];
+  sources: Sources = null;
   constructor(private httpClient: HttpClient, private loaderService: NgxUiLoaderService) { }
 
   ngOnInit() {
@@ -29,8 +31,8 @@ export class SourceComponent implements OnInit {
 
   getAllSources() {
     this.loaderService.start();
-    this.httpClient.get('https://newsapi.org/v2/sources?apiKey=8fcef351de914f59b2797dadf86d4908').subscribe((sources: any) => {
-      this.sources = sources.sources;
+    this.httpClient.get('https://newsapi.org/v2/sources?apiKey=8fcef351de914f59b2797dadf86d4908').subscribe((resources: any) => {
+      this.resources = resources.sources;
       this.loaderService.stop();
     }, (error) => {
       this.loaderService.stop();
@@ -39,7 +41,7 @@ export class SourceComponent implements OnInit {
   }
 
   subscribeOrUnsubscribeSource(sourceId) {
-    if (sourceId && this.elementExistInArray(sourceId, this.subscribedSources)) {
+    if (sourceId && this.isExistInArray(sourceId, this.subscribedSources)) {
       this.subscribedSources = this.subscribedSources.filter(c => c !== sourceId);
     } else {
       this.subscribedSources = [...this.subscribedSources, sourceId];
@@ -47,7 +49,7 @@ export class SourceComponent implements OnInit {
   }
 
   subscribeOrUnsubscribeCategory(category) {
-    if (category && this.elementExistInArray(category, this.subscribedCategories)) {
+    if (category && this.isExistInArray(category, this.subscribedCategories)) {
       this.subscribedCategories = this.subscribedCategories.filter(c => c !== category);
     } else {
       this.subscribedCategories = [...this.subscribedCategories, category];
@@ -55,7 +57,7 @@ export class SourceComponent implements OnInit {
   }
 
   subscribeOrUnsubscribeCountry(country) {
-    if (country && this.elementExistInArray(country, this.subscribedCountries)) {
+    if (country && this.isExistInArray(country, this.subscribedCountries)) {
       this.subscribedCountries = this.subscribedCountries.filter(c => c !== country);
     } else {
       this.subscribedCountries = [...this.subscribedCountries, country];
@@ -63,18 +65,18 @@ export class SourceComponent implements OnInit {
   }
 
   subscribeOrUnsubscribeLanguage(language) {
-    if (language && this.elementExistInArray(language, this.subscribedLanguages)) {
+    if (language && this.isExistInArray(language, this.subscribedLanguages)) {
       this.subscribedLanguages = this.subscribedLanguages.filter(l => l !== language);
     } else {
       this.subscribedLanguages = [...this.subscribedLanguages, language];
     }
   }
 
-  saveSubscriptionChanges(){
+  saveSubscriptionChanges() {
     console.log(this.subscribedCategories, this.subscribedCountries, this.subscribedLanguages, this.subscribedSources);
   }
 
-  private elementExistInArray(element, array) {
+  isExistInArray(element, array) {
     return array.indexOf(element) === -1 ? false : true;
   }
 

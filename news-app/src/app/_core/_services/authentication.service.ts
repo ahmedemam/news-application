@@ -18,15 +18,6 @@ export class AuthenticationService {
     private jwtHelperService: JwtHelperService) { }
 
 
-
-  getAll() {
-    return this.httpClient.get<User[]>(`/users`);
-  }
-
-  getById(id: number) {
-    return this.httpClient.get(`${environment.BACKEND_SERVICE}/users/${id}`);
-  }
-
   login(loginCredentials: any) {
     return this.httpClient.post(`${environment.BACKEND_SERVICE}/users/authentication`, loginCredentials);
   }
@@ -42,14 +33,6 @@ export class AuthenticationService {
 
   register(newUser: any) {
     return this.httpClient.post(`${environment.BACKEND_SERVICE}/users/register`, newUser);
-  }
-
-  update(user: User) {
-    return this.httpClient.put(`${environment.BACKEND_SERVICE}/users/${user.id}`, user);
-  }
-
-  delete(id: number) {
-    return this.httpClient.delete(`${environment.BACKEND_SERVICE}/users/${id}`);
   }
 
   logout() {

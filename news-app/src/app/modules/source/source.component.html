@@ -1,35 +1,64 @@
 <div class="container">
-  <h1>Manage Articles/News</h1>
   <div class="row">
-    <div class="btn-save">
-      <button class="btn btn-dark " (click)="saveSubscriptionChanges()" >Save Changes</button>
+    <div class="h1 pull-left">
+      Manage Articles/News
+      <button
+        class="btn btn-dark pull-right "
+        (click)="saveSubscriptionChanges()"
+      >
+        Save Changes
+      </button>
     </div>
-  </div>
-  <div class="section sources">
-    <h4><u>Manage Sources</u></h4>
-    <span *ngFor="let source of sources" >
-      <button class="btn btn-link" (click)="subscribeOrUnsubscribeSource(source.id)" >{{source.name}}</button>
-    </span>
-  </div>
+    <div class="section sources">
+      <h4><u>Manage Sources</u></h4>
+      <span *ngFor="let resource of resources">
+        <button
+          class="btn"
+          [ngClass]="isExistInArray(resource.id, subscribedSources) ? 'btn-primary' : 'btn-link'"
+          (click)="subscribeOrUnsubscribeSource(resource.id)"
+        >
+          {{ resource.name }}
+        </button>
+      </span>
+    </div>
 
-  <div class="section categories">
-    <h4><u>Manage Categories</u></h4>
-    <span *ngFor="let category of CategoryEnum | keyvalue" >
-      <button class="btn btn-link" (click)="subscribeOrUnsubscribeCategory(category.value)" >{{category.key}}</button>
-    </span>
-  </div>
+    <div class="section categories">
+      <h4><u>Manage Categories</u></h4>
+      <span *ngFor="let category of CategoryEnum | keyvalue">
+        <button
+          class="btn"
+          [ngClass]="isExistInArray(category.value, subscribedCategories) ? 'btn-primary' : 'btn-link'"
+          (click)="subscribeOrUnsubscribeCategory(category.value)"
+        >
+          {{ category.key }}
+        </button>
+      </span>
+    </div>
 
-  <div class="section countries">
-    <h4><u>Manage Contries</u></h4>
-    <span *ngFor="let country of CountryEnum | keyvalue" >
-      <button class="btn btn-link" (click)="subscribeOrUnsubscribeCountry(country.value)" >{{country.key}}</button>
-    </span>
-  </div>
+    <div class="section countries">
+      <h4><u>Manage Contries</u></h4>
+      <span *ngFor="let country of CountryEnum | keyvalue">
+        <button
+          class="btn"
+          [ngClass]="isExistInArray(country.value, subscribedCountries) ? 'btn-primary' : 'btn-link'"
+          (click)="subscribeOrUnsubscribeCountry(country.value)"
+        >
+          {{ country.key }}
+        </button>
+      </span>
+    </div>
 
-  <div class="section languages">
-    <h4><u>Manage Language</u></h4>
-    <span *ngFor="let language of LanguageEnum | keyvalue" >
-      <button class="btn btn-link" (click)="subscribeOrUnsubscribeLanguage(language.value)" >{{language.key}}</button>
-    </span>
+    <div class="section languages">
+      <h4><u>Manage Language</u></h4>
+      <span *ngFor="let language of LanguageEnum | keyvalue">
+        <button
+          class="btn"
+          [ngClass]="isExistInArray(language.value, subscribedLanguages) ? 'btn-primary' : 'btn-link'"
+          (click)="subscribeOrUnsubscribeLanguage(language.value)"
+        >
+          {{ language.key }}
+        </button>
+      </span>
+    </div>
   </div>
 </div>

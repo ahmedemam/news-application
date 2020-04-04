@@ -6,7 +6,6 @@
   padding: 20px 0;
 }
 
-.btn-save{
-  float: right;
-  padding: auto 20px;
+button{
+  margin: 2.5px;
 }
