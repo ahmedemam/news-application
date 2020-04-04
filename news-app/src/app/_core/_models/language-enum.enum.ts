@@ -1,5 +1,5 @@
 export enum LanguageEnum {
-  DEFAULT = 'all',
+  // DEFAULT = 'all',
   AR = 'ar',
   DE = 'de',
   EN = 'en',

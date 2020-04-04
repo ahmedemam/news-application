@@ -1,0 +1,18 @@
+<div class="article">
+  <h4 class="title">
+    <a href="{{ article.url }}"><ins>{{ article.title }}</ins></a>
+  </h4>
+  <h6 class="text-muted blockquote-footer">{{ article.author }}</h6>
+  <div class="lead">
+    {{ article.description }} <br />
+    <p class="badge badge-dark">{{ article.source.name }}</p>
+  </div>
+  <!-- <span>{{article.publishedAt}}</span> -->
+  <img
+    class="img-fluid rounded mx-auto d-block"
+    src="{{ article.urlToImage }}"
+    alt="article image"
+  />
+  <div class="text-muted">{{ article.content }}</div>
+
+</div>

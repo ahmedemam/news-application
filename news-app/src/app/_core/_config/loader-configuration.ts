@@ -19,7 +19,7 @@ export class LoaderConfiguration {
     logoUrl: '../../../../../assets/images/icons8-news-spotlight-90.png',
     masterLoaderId: 'master',
     overlayBorderRadius: '0',
-    overlayColor: 'rgba(40, 40, 40, 0.8)',
+    overlayColor: 'white',
     pbColor: 'black',
     pbDirection: 'ltr',
     pbThickness: 5,

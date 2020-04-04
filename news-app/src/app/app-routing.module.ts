@@ -6,10 +6,13 @@ import { RegisterComponent } from './components/register/register.component';
 
 
 const routes: Routes = [
+  { path: 'home', loadChildren: () => import('./modules/home/home.module').then(m => m.HomeModule) },
+  { path: 'source', loadChildren: () => import('./modules/source/source.module').then(m => m.SourceModule) },
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
   { path: 'error', component: ErrorComponent },
   { path: '**', redirectTo: '/login' },
+
 ];
 
 

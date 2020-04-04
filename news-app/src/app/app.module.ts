@@ -7,11 +7,11 @@ import { LoaderConfiguration } from './_core/_config/loader-configuration';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { ErrorComponent } from './components/error/error.component';
-import { NewsComponent } from './components/news/news.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { JwtHelperService, JWT_OPTIONS, JwtModule } from '@auth0/angular-jwt';
+import { HomeModule } from './modules/home/home.module';
 
 @NgModule({
   declarations: [
@@ -19,8 +19,7 @@ import { JwtHelperService, JWT_OPTIONS, JwtModule } from '@auth0/angular-jwt';
     LoginComponent,
     RegisterComponent,
     ErrorComponent,
-    NewsComponent,
-    HeaderComponent
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +27,8 @@ import { JwtHelperService, JWT_OPTIONS, JwtModule } from '@auth0/angular-jwt';
     NgxUiLoaderModule.forRoot(LoaderConfiguration.configuration),
     ReactiveFormsModule,
     HttpClientModule,
-    JwtModule
+    JwtModule,
+    HomeModule
   ],
   providers: [
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },

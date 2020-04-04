@@ -1,5 +1,5 @@
 export enum CategoryEnum {
-  DEFAULT = 'all',
+  // DEFAULT = 'all',
   GENERAL = 'general',
   BUSINESS = 'business',
   ENTERTAINMENT = 'entertainment',

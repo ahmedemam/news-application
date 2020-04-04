@@ -1,0 +1,11 @@
+<div class="container">
+  <h1>Latest Articles/News</h1>
+  <div *ngFor="let article of articles | slice:0:visibleArticlesCounter" >
+    <app-news [article]="article"></app-news>
+  </div>
+  <div class="row">
+    <div class="col text-center">
+      <button class= "btn btn-dark btn-load-more" (click)="getMoreArticles()" >Load More Articles</button>
+    </div>
+  </div>
+</div>

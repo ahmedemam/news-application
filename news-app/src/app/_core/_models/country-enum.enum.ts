@@ -1,6 +1,6 @@
 export enum CountryEnum {
   // NOT SUPPORT ALL COUNTRIES
-  DEFAULT = 'all',
+  // DEFAULT = 'all',
   AR = 'ar',
   EG = 'eg',
   DE = 'de',
