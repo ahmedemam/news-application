@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { AuthenticationService } from 'src/app/_core/_services/authentication.service';
 import { Article } from 'src/app/_core/_models/article';
+import { SourceService } from 'src/app/_core/_services/source.service';
+import { User } from 'src/app/_core/_models/user';
 
 @Component({
   selector: 'app-home',
@@ -10,12 +12,15 @@ import { Article } from 'src/app/_core/_models/article';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  currentUser: User;
   articles: Article[] = [];
   totalResults = 0;
   visibleArticlesCounter = 0;
   enableLoadMoreArticlesButton = true;
-  API_KEY = '';
-  constructor(private http: HttpClient, private loaderService: NgxUiLoaderService, private authenticationServie: AuthenticationService) { }
+  constructor(private loaderService: NgxUiLoaderService,
+    private authenticationServie: AuthenticationService, private sourceService: SourceService) {
+    this.currentUser = this.authenticationServie.currentUserValue;
+  }
 
   ngOnInit() {
     this.getAllArticles();
@@ -23,20 +28,22 @@ export class HomeComponent implements OnInit {
 
 
   getAllArticles() {
-    this.loaderService.start();
-    this.http.get('http://newsapi.org/v2/top-headlines?country=us&apiKey=8fcef351de914f59b2797dadf86d4908').subscribe((articles: any) => {
-      this.articles = articles.articles;
-      this.totalResults = articles.totalResults;
-      if (this.totalResults >= 3) {
-        this.visibleArticlesCounter = 3;
-      } else {
-        this.visibleArticlesCounter = this.totalResults;
-        this.enableLoadMoreArticlesButton = false;
-      }
-      this.loaderService.stop();
-    }, (error) => {
-      this.loaderService.stop();
-    });
+    if (this.currentUser) {
+      this.loaderService.start();
+      this.sourceService.getAllArticles(this.currentUser._id).subscribe((articles: any) => {
+        this.articles = articles.articles;
+        this.totalResults = articles.totalResults;
+        if (this.totalResults >= 3) {
+          this.visibleArticlesCounter = 3;
+        } else {
+          this.visibleArticlesCounter = this.totalResults;
+          this.enableLoadMoreArticlesButton = false;
+        }
+        this.loaderService.stop();
+      }, (error) => {
+        this.loaderService.stop();
+      });
+    }
   }
 
   getMoreArticles() {

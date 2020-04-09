@@ -21,16 +21,15 @@ export class NewsService {
 
     public async getNewsByUserConfiguration(userID: string) {
         const user = await this.userService.getUserById(userID);
-        if (user) {
-            const articles = await this.newsapi.v2.topHeadlines({
-                sources: user.sources.length > 0 ? user.sources.join(',') : 'all'
-            });
+        if (user && user.sources.length > 0) {
+            const sources = user.sources.join(',');
+            const articles = await this.newsapi.v2.topHeadlines({sources});
+            return await articles;
+        }else{
+            const articles = await this.newsapi.v2.topHeadlines();
             return await articles;
         }
         return false;
     }
-
-
-
 }
 

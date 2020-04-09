@@ -4,8 +4,8 @@
     <app-news [article]="article"></app-news>
   </div>
   <div class="row">
-    <div class="col text-center">
-      <button class= "btn btn-dark btn-load-more" (click)="getMoreArticles()" >Load More Articles</button>
+    <div  class="col text-center">
+      <button *ngIf="enableLoadMoreArticlesButton" class= "btn btn-dark btn-load-more" (click)="getMoreArticles()" >Load More Articles</button>
     </div>
   </div>
 </div>

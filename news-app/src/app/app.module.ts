@@ -9,9 +9,11 @@ import { RegisterComponent } from './components/register/register.component';
 import { ErrorComponent } from './components/error/error.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtHelperService, JWT_OPTIONS, JwtModule } from '@auth0/angular-jwt';
 import { HomeModule } from './modules/home/home.module';
+import { JwtInterceptor } from './_core/_interceptors/jwt-http-interceptor';
+import { HttpErrorInterceptor } from './_core/_interceptors/http-error-interceptor';
 
 @NgModule({
   declarations: [
@@ -32,6 +34,8 @@ import { HomeModule } from './modules/home/home.module';
   ],
   providers: [
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
     JwtHelperService
   ],
   bootstrap: [AppComponent]
