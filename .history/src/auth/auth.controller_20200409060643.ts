@@ -6,7 +6,7 @@ import { CreateUserDTO } from 'src/user/create-user.dto';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from 'src/user/user.interface';
-import { UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
 
 
 @Controller('auth')
@@ -29,7 +29,7 @@ export class AuthController {
     @Post('/logout')
     @UseGuards(AuthGuard())
     public async logout(@Res() response, @Body() user: User) {
-        if (user.access_token) {
+        if(user.access_token){
             user.access_token = "";
             const updatedUser = await this.userService.editUser(user._id, user);
             return response.status(HttpStatus.OK).json({});

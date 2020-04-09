@@ -13,22 +13,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(bodyParser.json({ limit: '1mb' }));
   app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(helmet()); 
+  app.use(helmet());
   app.enableCors();
-  app.use(cookieParser());
-  app.use(session({
-    secret: 'newsapp',
-    resave: true,
-    saveUninitialized: true,
-    httpOnly: true,
-    secure: false
-  }));
-  // TODO GOT A PROBLEM IN POST REQUESTS: TRYING TO FIGURE OUT....
-  // app.use(csurf({ cookie: true }));
-  // app.use(function (req, res, next) {
-  //   res.cookie('XSRF-TOKEN', req.csrfToken());
-  //   next();
-  // });
+  app.use(session({secret: 'newsapp',resave: false,saveUninitialized: true, cookie: { secure: true }}));
+  app.use(csurf({ cookie:true }));
+app.use(cookieParser());
   app.use(compression());
   app.use(rateLimit({ max: 1000, windowMs: 15 * 60 * 1000 }));
   await app.listen(3000);

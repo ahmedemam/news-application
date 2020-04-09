@@ -6,7 +6,7 @@ import { CreateUserDTO } from 'src/user/create-user.dto';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from 'src/user/user.interface';
-import { UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
 
 
 @Controller('auth')
@@ -17,7 +17,9 @@ export class AuthController {
     @Post('/login')
     public async login(@Res() response, @Body() loginUser: UserLoginDTO) {
         const user = await this.authService.validateUserByPassword(loginUser);
-        return response.status(HttpStatus.OK).json(user);
+        if (user) {
+            return response.status(HttpStatus.OK).json(user);
+        }
     }
 
     @Post('/register')

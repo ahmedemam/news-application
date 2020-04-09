@@ -13,7 +13,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(bodyParser.json({ limit: '1mb' }));
   app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(helmet()); 
+  app.use(helmet());
   app.enableCors();
   app.use(cookieParser());
   app.use(session({
@@ -23,12 +23,17 @@ async function bootstrap() {
     httpOnly: true,
     secure: false
   }));
-  // TODO GOT A PROBLEM IN POST REQUESTS: TRYING TO FIGURE OUT....
-  // app.use(csurf({ cookie: true }));
-  // app.use(function (req, res, next) {
-  //   res.cookie('XSRF-TOKEN', req.csrfToken());
-  //   next();
-  // });
+  app.use(csurf({ cookie: true }));
+  app.use(function (req, res, next) {
+    res.cookie('XSRF-TOKEN', req.csrfToken());
+    next();
+  });
+  app.use(function (req, res, next) {
+    res.header('X-XSS-Protection', '1; mode=block');
+    res.header('X-Frame-Options', 'deny');
+    res.header('X-Content-Type-Options', 'nosniff');
+    next();
+  });
   app.use(compression());
   app.use(rateLimit({ max: 1000, windowMs: 15 * 60 * 1000 }));
   await app.listen(3000);

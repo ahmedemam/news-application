@@ -32,10 +32,8 @@ export class AuthService {
             const isVaidatedPassword = await this.comparePassword(loginUser.password, user.password);
             if (isVaidatedPassword) {
                 const token = await this.createJwtPayload(user);
-                if(token){
-                    user.access_token = token.token;
-                    return await this.userService.editUser(user._id, user);
-                }
+                user.access_token = token.token;
+                return await this.userService.editUser(user._id, user);
             }
             return new UnauthorizedException();
         }

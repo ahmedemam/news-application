@@ -32,7 +32,7 @@ export class AuthController {
         if (user.access_token) {
             user.access_token = "";
             const updatedUser = await this.userService.editUser(user._id, user);
-            return response.status(HttpStatus.OK).json({});
+            return response.status(HttpStatus.OK);
         }
         return new UnauthorizedException();
     }

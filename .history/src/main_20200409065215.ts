@@ -13,7 +13,11 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.use(bodyParser.json({ limit: '1mb' }));
   app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(helmet()); 
+  app.use(helmet.hidePoweredBy()); 
+  app.use(helmet.noCache({ noEtag: true })); 
+  app.use(helmet.noSniff());    
+  app.use(helmet.frameguard()); 
+  app.use(helmet.xssFilter());
   app.enableCors();
   app.use(cookieParser());
   app.use(session({

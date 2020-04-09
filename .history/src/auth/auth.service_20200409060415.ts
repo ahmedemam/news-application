@@ -34,8 +34,8 @@ export class AuthService {
                 const token = await this.createJwtPayload(user);
                 if(token){
                     user.access_token = token.token;
-                    return await this.userService.editUser(user._id, user);
                 }
+                return await this.userService.editUser(user._id, user);
             }
             return new UnauthorizedException();
         }
