@@ -26,18 +26,15 @@ export class UserController {
         return res.status(HttpStatus.OK).json(user);
     }
 
-    @Put('/edit')
+
+    @Put(':userID/update')
     @UseGuards(AuthGuard())
-    async editPost(
-      @Res() res,
-      @Query('userID', new ValidateObjectId()) userID,
-      @Body() user: User,
-    ) {
-      const updatedUser = await this.userService.editUser(userID, user);
+    async updateUser(@Res() res, @Param('userID') id, @Body() user: User){
+        const updatedUser = await this.userService.editUser(user._id, user);
       if (!updatedUser) {
           throw new NotFoundException('USER_NOT_FOUND_EXCEPTION');
       }
       return res.status(HttpStatus.OK).json(user);
-    }
+    }  
 
 }

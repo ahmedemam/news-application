@@ -6,7 +6,6 @@ export interface User extends Document {
     email: string;
     password: string;
     access_token: string;
-    refresh_token: string;
     sources: string[];
     
     // NEWS API SUPPORT MISSING

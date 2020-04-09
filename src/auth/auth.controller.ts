@@ -5,6 +5,9 @@ import { UserService } from 'src/user/user.service';
 import { CreateUserDTO } from 'src/user/create-user.dto';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthGuard } from '@nestjs/passport';
+import { User } from 'src/user/user.interface';
+import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
+
 
 @Controller('auth')
 export class AuthController {
@@ -22,13 +25,15 @@ export class AuthController {
         return response.status(HttpStatus.OK).json(user);
     }
 
-    @Get('/logout')
+    @Post('/logout')
     @UseGuards(AuthGuard())
-    public async logout(@Req() request, @Res() response) {
-        request.logout();
-        // remove token
-        // use refresh token
-        return response.status(HttpStatus.OK);
+    public async logout(@Res() response, @Body() user: User) {
+        if(user.access_token){
+            user.access_token = "";
+            const updatedUser = await this.userService.editUser(user._id, user);
+            return response.status(HttpStatus.OK).json(updatedUser);
+        }
+        return new UnauthorizedException();
     }
 
 }

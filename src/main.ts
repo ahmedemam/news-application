@@ -15,9 +15,9 @@ async function bootstrap() {
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(helmet());
   app.enableCors();
-  app.use(cookieParser());
   app.use(session({secret: 'newsapp',resave: false,saveUninitialized: true, cookie: { secure: true }}));
-  app.use(csurf({ cookie: true }));
+  // app.use(csurf({ cookie:false }))
+app.use(cookieParser());
   app.use(compression());
   app.use(rateLimit({ max: 1000, windowMs: 15 * 60 * 1000 }));
   await app.listen(3000);

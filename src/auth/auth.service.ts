@@ -15,7 +15,6 @@ export class AuthService {
 
     public async createUser(createUserDTO: CreateUserDTO): Promise<any> {
         const user = await this.userService.createUser(createUserDTO);
-        console.log(user)
         if (user) {
             const token = this.createJwtPayload(user);
             user.access_token = token.token;

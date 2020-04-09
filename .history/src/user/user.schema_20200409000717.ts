@@ -1,19 +1,14 @@
 import * as mongoose from 'mongoose';
 import * as bcrypt from 'bcrypt';
-import validator from 'validator';
 import { User } from './user.interface';
 const SALT_WORK_FACTOR = 10;
 
 export const UserSchema = new mongoose.Schema({
     username: { type: String, required: true, trim: true },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        lowercase: true,
-    },
-    password: { type: String, required: true, minLength: 8, maxLength: 20 },
+    email: {type: String, required: true, unique: true},
+    password: { type: String, required: true },
     access_token: { type: String},
+    refresh_token: { type: String},
     sources: [{ type: String }]
 
     // NEWS API SUPPORT MISSING
