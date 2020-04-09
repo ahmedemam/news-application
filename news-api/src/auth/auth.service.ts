@@ -14,7 +14,7 @@ export class AuthService {
     constructor(private userService: UserService, private jwtService: JwtService) { }
 
     public async createUser(createUserDTO: CreateUserDTO): Promise<any> {
-        const user = await this.userService.createUser(createUserDTO);
+        let user = await this.userService.createUser(createUserDTO);
         if (user) {
             const token = this.createJwtPayload(user);
             user.access_token = token.token;
@@ -27,15 +27,15 @@ export class AuthService {
 
 
     public async validateUserByPassword(loginUser: UserLoginDTO) {
-        const user = await this.userService.getUserByEmail(loginUser.email);
+        let user = await this.userService.getUserByEmail(loginUser.email);
         if (user) {
-            const isVaidatedPassword = this.comparePassword(loginUser.password, user.password);
+            const isVaidatedPassword = await this.comparePassword(loginUser.password, user.password);
             if (isVaidatedPassword) {
-                const token = this.createJwtPayload(user);
-                user.access_token = token.token;
-                const updatedUser = this.userService.editUser(user._id, user);
-                console.log(updatedUser);
-                return updatedUser;
+                const token = await this.createJwtPayload(user);
+                if(token){
+                    user.access_token = token.token;
+                    return await this.userService.editUser(user._id, user);
+                }
             }
             return new UnauthorizedException();
         }
@@ -71,4 +71,3 @@ export class AuthService {
 }
 
 
-// @UseGuards(AuthGuard())

@@ -3,7 +3,6 @@ import { NewsService } from './news.service';
 import { NewsController } from './news.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema } from 'src/user/user.schema';
-import { UserController } from 'src/user/user.controller';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from 'src/user/user.module';

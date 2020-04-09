@@ -6,7 +6,7 @@ import { CreateUserDTO } from 'src/user/create-user.dto';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from 'src/user/user.interface';
-import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
+import { UnauthorizedException } from '@nestjs/common';
 
 
 @Controller('auth')
@@ -15,8 +15,9 @@ export class AuthController {
     constructor(private authService: AuthService, private userService: UserService, private jwtStrategy: JwtStrategy) { }
 
     @Post('/login')
-    public async login(@Body() loginUser: UserLoginDTO) {
-        return await this.authService.validateUserByPassword(loginUser);
+    public async login(@Res() response, @Body() loginUser: UserLoginDTO) {
+        const user = await this.authService.validateUserByPassword(loginUser);
+        return response.status(HttpStatus.OK).json(user);
     }
 
     @Post('/register')
@@ -28,10 +29,10 @@ export class AuthController {
     @Post('/logout')
     @UseGuards(AuthGuard())
     public async logout(@Res() response, @Body() user: User) {
-        if(user.access_token){
+        if (user.access_token) {
             user.access_token = "";
             const updatedUser = await this.userService.editUser(user._id, user);
-            return response.status(HttpStatus.OK).json(updatedUser);
+            return response.status(HttpStatus.OK).json({});
         }
         return new UnauthorizedException();
     }
